@@ -71,6 +71,25 @@ button:disabled { opacity: .4; cursor: not-allowed; }
 .factor-card span { font-weight: 700; margin-top: 6px; }
 .factor-card small { color: var(--muted); }
 
+.mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.mode-card { display: flex; flex-direction: column; position: relative; }
+.mode-card h2 { margin-bottom: .2em; }
+.mode-card p:last-of-type { flex: 1; }
+.mode-card button { align-self: flex-start; }
+.badge-rec { align-self: flex-start; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 3px 10px; border-radius: 99px; background: color-mix(in srgb, var(--s) 16%, transparent); color: var(--s); margin-bottom: 10px; }
+
+/* Escala de concordância */
+.statement { font-size: clamp(1.25rem, 3vw, 1.6rem); font-weight: 600; letter-spacing: -.01em; line-height: 1.35; margin: 4px 0 24px; min-height: 2.7em; }
+.scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.scale button { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 14px 6px; display: flex; flex-direction: column; align-items: center; gap: 8px; font-weight: 500; font-size: .85rem; line-height: 1.25; text-align: center; }
+.scale button .dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); transition: all .15s ease; }
+.scale button[data-v="1"] .dot, .scale button[data-v="5"] .dot { width: 30px; height: 30px; }
+.scale button[data-v="2"] .dot, .scale button[data-v="4"] .dot { width: 26px; height: 26px; }
+.scale button:hover .dot { border-color: var(--muted); }
+.scale button[aria-pressed="true"] { border-color: var(--accent); background: var(--surface-2); font-weight: 700; }
+.scale button[aria-pressed="true"] .dot { background: var(--accent); border-color: var(--accent); }
+.scale-keys { margin-top: 12px; }
+
 .steps { padding-left: 1.2em; margin: 0; }
 .steps li { margin-bottom: .5em; }
 
@@ -126,7 +145,11 @@ details summary { cursor: pointer; font-weight: 600; margin-top: 8px; color: var
 .footer { color: var(--muted); font-size: .82rem; padding-bottom: 32px; text-align: center; }
 
 @media (max-width: 720px) {
-  .grid-2, .cols { grid-template-columns: 1fr; }
+  .grid-2, .cols, .mode-grid { grid-template-columns: 1fr; }
+  .scale { grid-template-columns: 1fr; }
+  .scale button { flex-direction: row; justify-content: flex-start; padding: 12px 14px; font-size: .95rem; }
+  .scale button .dot { width: 22px !important; height: 22px !important; }
+  .scale-keys { display: none; }
   .factor-grid, .score-row { grid-template-columns: repeat(2, 1fr); }
   .quiz-head, .opt { grid-template-columns: 1fr 48px 48px; }
   .pick label { width: 36px; height: 36px; }

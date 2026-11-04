@@ -34,6 +34,64 @@ const ITEMS = [
 
 const FACTORS = ["D", "I", "S", "C"];
 
+// Escala de concordância (Likert 1–5): 12 afirmações por fator, 3 delas invertidas (r: true)
+// para controlar a tendência de concordar com tudo (aquiescência).
+const STATEMENTS = [
+  { f: "D", t: "Gosto de tomar decisões rapidamente, mesmo sem ter todas as informações." },
+  { f: "D", t: "Quando vejo um problema, tomo a iniciativa de resolvê-lo." },
+  { f: "D", t: "Fico confortável em assumir a liderança de um grupo." },
+  { f: "D", t: "Digo o que penso de forma direta, mesmo que incomode." },
+  { f: "D", t: "Situações competitivas me motivam." },
+  { f: "D", t: "Gosto de enfrentar desafios difíceis." },
+  { f: "D", t: "Fico impaciente quando as coisas andam devagar." },
+  { f: "D", t: "Defendo minha posição com firmeza quando discordo de alguém." },
+  { f: "D", t: "Prefiro ter controle sobre como meu trabalho é feito." },
+  { f: "D", t: "Prefiro que outra pessoa tome as decisões importantes.", r: true },
+  { f: "D", t: "Evito confrontar as pessoas, mesmo quando discordo delas.", r: true },
+  { f: "D", t: "Prefiro seguir a liderança de alguém a liderar.", r: true },
+
+  { f: "I", t: "Faço amizade com facilidade." },
+  { f: "I", t: "Gosto de ser o centro das atenções em um grupo." },
+  { f: "I", t: "Consigo animar as pessoas com minhas ideias." },
+  { f: "I", t: "Converso com desconhecidos sem dificuldade." },
+  { f: "I", t: "Costumo ver o lado positivo das situações." },
+  { f: "I", t: "Gosto de trabalhar em contato com muitas pessoas." },
+  { f: "I", t: "Sou bom(boa) em convencer os outros." },
+  { f: "I", t: "Expresso minhas emoções abertamente." },
+  { f: "I", t: "Gosto de ambientes animados e descontraídos." },
+  { f: "I", t: "Prefiro trabalhar sozinho(a) a trabalhar em grupo.", r: true },
+  { f: "I", t: "Em eventos sociais, costumo ficar mais na minha.", r: true },
+  { f: "I", t: "Tenho dificuldade em puxar conversa com pessoas novas.", r: true },
+
+  { f: "S", t: "Sou uma pessoa paciente." },
+  { f: "S", t: "Prefiro uma rotina previsível a muitas surpresas." },
+  { f: "S", t: "Gosto de ajudar os outros, mesmo sem ser solicitado(a)." },
+  { f: "S", t: "Mantenho a calma quando os outros estão agitados." },
+  { f: "S", t: "Valorizo relações longas e estáveis." },
+  { f: "S", t: "Prefiro cooperar a competir." },
+  { f: "S", t: "Escuto com atenção antes de dar minha opinião." },
+  { f: "S", t: "Mudanças repentinas me deixam desconfortável." },
+  { f: "S", t: "Procuro manter a harmonia no grupo." },
+  { f: "S", t: "Fico entediado(a) rapidamente com rotina.", r: true },
+  { f: "S", t: "Gosto de mudar de planos de última hora.", r: true },
+  { f: "S", t: "Perco a paciência com facilidade.", r: true },
+
+  { f: "C", t: "Presto muita atenção aos detalhes." },
+  { f: "C", t: "Gosto de analisar os dados antes de tomar uma decisão." },
+  { f: "C", t: "Sigo regras e procedimentos com cuidado." },
+  { f: "C", t: "Confiro meu trabalho várias vezes antes de entregá-lo." },
+  { f: "C", t: "Prefiro instruções claras e bem definidas." },
+  { f: "C", t: "Gosto de planejar as coisas com antecedência." },
+  { f: "C", t: "Mantenho minhas coisas organizadas." },
+  { f: "C", t: "Questiono afirmações que não têm evidências." },
+  { f: "C", t: "Prefiro fazer algo certo a fazer rápido." },
+  { f: "C", t: "Costumo ignorar os detalhes e focar no todo.", r: true },
+  { f: "C", t: "Tomo decisões pelo instinto, sem analisar muito.", r: true },
+  { f: "C", t: "Acho que regras atrapalham mais do que ajudam.", r: true },
+];
+
+const SCALE = ["Discordo totalmente", "Discordo", "Neutro", "Concordo", "Concordo totalmente"];
+
 const FACTOR_INFO = {
   D: {
     name: "Dominância",
