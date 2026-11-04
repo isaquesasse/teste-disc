@@ -28,7 +28,7 @@
       <div class="hero">
         <p class="eyebrow">Avaliação comportamental</p>
         <h1>Descubra seu perfil DISC</h1>
-        <p class="lead">28 blocos de escolha forçada, cerca de 10 minutos. Ao final você recebe um relatório com seus quatro fatores, seu padrão combinado, gráficos e orientações práticas.</p>
+        <p class="lead">Escolha um dos dois formatos de teste. Ao final você recebe um relatório com seus quatro fatores, seu padrão combinado, gráficos e orientações práticas.</p>
       </div>
 
       <div class="factor-grid">
@@ -38,17 +38,31 @@
         <div class="factor-card" style="--fc:var(--c)"><b>C</b><span>Conformidade</span><small>Regras e padrões</small></div>
       </div>
 
+      <div class="mode-grid">
+        <div class="card mode-card">
+          <span class="badge-rec">Recomendado</span>
+          <h2>Escala de concordância</h2>
+          <p class="muted">48 afirmações · cerca de 8 minutos</p>
+          <p>Para cada afirmação, diga o quanto concorda, de “Discordo totalmente” a “Concordo totalmente”. Uma afirmação por tela, com avanço automático.</p>
+          <button id="start-likert" class="primary" type="button">Começar este teste</button>
+        </div>
+        <div class="card mode-card">
+          <h2>Escolha forçada</h2>
+          <p class="muted">28 blocos · cerca de 10 minutos</p>
+          <p>Em cada bloco com quatro palavras, marque a que <b>mais</b> e a que <b>menos</b> se parece com você. É o formato clássico dos testes DISC.</p>
+          <button id="start" class="secondary" type="button">Começar este teste</button>
+        </div>
+      </div>
+
       <div class="card">
-        <h2>Como responder</h2>
+        <h2>Dicas para responder</h2>
         <ol class="steps">
-          <li>Em cada bloco há quatro descrições. Marque <b>uma como “Mais”</b> (a que mais se parece com você) e <b>uma como “Menos”</b> (a que menos se parece).</li>
           <li>Pense em como você <b>geralmente</b> age no trabalho e no dia a dia, não em como gostaria de ser.</li>
           <li>Responda rápido. A primeira impressão costuma ser a mais fiel.</li>
           <li>Não existe perfil melhor ou pior. Cada estilo tem forças e pontos de atenção.</li>
         </ol>
         <div class="actions">
-          <button id="start" class="primary" type="button">Começar o teste</button>
-          <button id="resume" class="secondary hidden" type="button">Continuar de onde parei</button>
+          <button id="resume" class="secondary hidden" type="button">Continuar o teste de onde parei</button>
         </div>
         <p class="fine">Suas respostas ficam apenas no seu navegador. Nada é enviado para servidores.</p>
       </div>
@@ -63,8 +77,8 @@
       <div class="progress"><div id="progress-bar"></div></div>
 
       <div class="card quiz-card">
-        <p class="quiz-hint">Escolha a descrição que <b>mais</b> se parece com você e a que <b>menos</b> se parece.</p>
-        <div class="quiz-head" aria-hidden="true"><span></span><span>Mais</span><span>Menos</span></div>
+        <p class="quiz-hint" id="quiz-hint">Escolha a descrição que <b>mais</b> se parece com você e a que <b>menos</b> se parece.</p>
+        <div class="quiz-head" id="quiz-head" aria-hidden="true"><span></span><span>Mais</span><span>Menos</span></div>
         <div id="options" role="group"></div>
         <p id="quiz-error" class="error hidden">Marque uma opção “Mais” e uma “Menos” diferentes.</p>
       </div>
@@ -102,8 +116,8 @@
 
       <div class="grid-2">
         <div class="card">
-          <h2>Mais × Menos</h2>
-          <p class="muted">Quantas vezes cada fator foi escolhido como “Mais” e como “Menos” parecido com você.</p>
+          <h2 id="ml-title">Mais × Menos</h2>
+          <p class="muted" id="ml-desc">Quantas vezes cada fator foi escolhido como “Mais” e como “Menos” parecido com você.</p>
           <div class="chart-box"><canvas id="chart-ml"></canvas></div>
         </div>
         <div class="card">
@@ -123,10 +137,17 @@
 
       <div class="card">
         <h2>Como ler o seu resultado</h2>
-        <ul class="bullets">
+        <ul class="bullets" id="howto-forced">
           <li><b>Gráfico “Mais”:</b> costuma ser lido como o comportamento que você mostra conscientemente, adaptado ao ambiente.</li>
           <li><b>Gráfico “Menos”:</b> costuma ser associado a tendências mais naturais, que aparecem sob pressão.</li>
           <li><b>Perfil geral (Mais − Menos):</b> é a síntese usada para definir seu estilo. Fatores acima de 50 são tendências marcantes; abaixo de 50, menos presentes.</li>
+        </ul>
+        <ul class="bullets" id="howto-likert">
+          <li><b>Notas de 0 a 100:</b> 0 significa discordar totalmente de todas as afirmações do fator; 100, concordar totalmente; 50 é a posição neutra.</li>
+          <li>Neste formato os fatores são medidos de forma <b>independente</b>: é possível ter dois ou mais fatores altos (ou baixos) ao mesmo tempo.</li>
+          <li>O estilo é definido pelo fator mais alto; o segundo entra no padrão combinado quando também está acima de 50 e próximo do primeiro.</li>
+        </ul>
+        <ul class="bullets">
           <li>O DISC descreve <b>comportamento observável</b>, não inteligência, competência, valores ou caráter. O perfil pode variar com o contexto e ao longo da vida.</li>
         </ul>
       </div>
@@ -142,14 +163,17 @@
     <!-- SOURCES -->
     <section class="card sources">
       <h2>Metodologia e fontes</h2>
-      <p>Os itens deste teste são <b>originais</b> e foram escritos a partir das definições públicas do modelo DISC. O formato de escolha forçada (“Mais/Menos”) segue a tradição dos instrumentos derivados de Marston e reduz o viés de responder apenas o que é socialmente desejável. Cada bloco tem um descritor de cada fator, com desejabilidade equilibrada.</p>
-      <p><b>Pontuação:</b> para cada fator, contam-se as escolhas “Mais” (M) e “Menos” (L). O perfil geral é M − L, convertido para 0–100. O fator mais alto define o estilo primário; o segundo entra no padrão combinado quando também está acima da média e próximo do primeiro.</p>
-      <p><b>Limitações honestas:</b> esta é uma ferramenta de autoconhecimento, <b>não um instrumento psicométrico validado</b> nem um teste clínico. Escores de escolha forçada são <i>ipsativos</i> (os fatores competem entre si), o que é adequado para descrever o perfil de uma pessoa, mas não para comparar pessoas ou tomar decisões de contratação. Para usos formais, prefira instrumentos com estudos de validação publicados.</p>
+      <p>Os itens deste teste são <b>originais</b> e foram escritos a partir das definições públicas do modelo DISC. Há dois formatos:</p>
+      <p><b>Escala de concordância (Likert, 1–5):</b> 12 afirmações por fator, no estilo dos itens de domínio público do International Personality Item Pool (IPIP). Em cada fator, 3 afirmações são <i>invertidas</i> (concordar diminui a nota), o que controla a tendência de concordar com tudo. A nota é a soma das respostas, convertida para 0–100. Como os fatores são medidos de forma independente (escore <i>normativo</i>), dá para ter mais de um fator alto.</p>
+      <p><b>Escolha forçada (“Mais/Menos”):</b> segue a tradição dos instrumentos derivados de Marston e reduz o viés de responder só o que é socialmente desejável. Cada bloco tem um descritor de cada fator, com desejabilidade equilibrada. Para cada fator, contam-se as escolhas “Mais” (M) e “Menos” (L); o perfil geral é M − L, convertido para 0–100.</p>
+      <p><b>Limitações honestas:</b> esta é uma ferramenta de autoconhecimento, <b>não um instrumento psicométrico validado</b> nem um teste clínico. Escores de escolha forçada são <i>ipsativos</i> (os fatores competem entre si); escalas de concordância são mais sujeitas a respostas socialmente desejáveis. Nenhum dos dois formatos deve ser usado para comparar pessoas ou tomar decisões de contratação. Para usos formais, prefira instrumentos com estudos de validação publicados.</p>
       <ul class="refs">
         <li>Marston, W. M. (1928). <i>Emotions of Normal People</i>. Kegan Paul, Trench, Trubner &amp; Co. — origem do modelo de quatro fatores.</li>
         <li>Hicks, L. E. (1970). Some properties of ipsative, normative, and forced-choice normative measures. <i>Psychological Bulletin, 74</i>(3), 167–184. — propriedades e limites de escores de escolha forçada.</li>
         <li>Jones, C. S., &amp; Hartley, N. T. (2013). Comparing correlations between four-quadrant and five-factor personality assessments. <i>American Journal of Business Education, 6</i>(4), 459–470. — relação entre DISC e os Cinco Grandes Fatores.</li>
         <li>Wiley (2015, atualizado). <i>Everything DiSC Manual</i> / relatórios de validação — modelo circular (ritmo × foco) e evidências de consistência interna para instrumentos comerciais.</li>
+        <li>Goldberg, L. R., et al. (2006). The International Personality Item Pool and the future of public-domain personality measures. <i>Journal of Research in Personality, 40</i>(1), 84–96. — referência para a redação de itens no formato de concordância.</li>
+        <li>Paulhus, D. L. (1991). Measurement and control of response bias. In J. P. Robinson, P. R. Shaver &amp; L. S. Wrightsman (Eds.), <i>Measures of Personality and Social Psychological Attitudes</i> (pp. 17–59). Academic Press. — itens invertidos e controle de aquiescência.</li>
         <li>Costa, P. T., &amp; McCrae, R. R. (1992). <i>NEO PI-R Professional Manual</i>. PAR. — referência para o modelo dos Cinco Grandes Fatores, mais robusto do ponto de vista científico.</li>
       </ul>
       <p class="fine">DISC é um modelo de domínio público. Este site não tem relação com Wiley, Everything DiSC, Thomas International ou outras marcas comerciais.</p>
